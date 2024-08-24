@@ -10,7 +10,7 @@ Stack:
 ## Getting Started
 
 . make build
-. ./bin&_la
+. ./bin/rixlog
 
 ## MakeFile
 
