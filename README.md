@@ -1,10 +1,16 @@
 # Project RixLog
 
-My personal page
+Webpage with artciles and pages.
+
+Stack:
+.Go
+.Htmx
+.Sqlite3
 
 ## Getting Started
 
-Clone the repo, build the app and run the binary.
+. make build
+. ./bin/rixlog
 
 ## MakeFile
 
