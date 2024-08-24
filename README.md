@@ -1,8 +1,9 @@
 # Project RixLog
 
-Webpage with artciles and pages.
+Website with artciles and pages.
 
-Stack:
+## Stack
+
 .Go
 .Htmx
 .Sqlite3
