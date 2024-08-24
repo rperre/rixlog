@@ -1,0 +1,10 @@
+INSERT INTO article (title, body, slug, user_id) VALUES ("First Article", "BODY", "furst", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst2", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst3", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst4", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst5", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst6", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst7", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst8", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst9", 1);
+INSERT INTO article (title, body, slug, user_id) VALUES ("Some Random Article", "This should be a Lopem thingy", "furst10", 1);
