@@ -3,14 +3,19 @@
 Webpage with artciles and pages.
 
 Stack:
-.Go
-.Htmx
-.Sqlite3
+* Go
+* Htmx
+* Sqlite3
 
 ## Getting Started
-
-. make build
-. ./bin/rixlog
+Create binary
+```bash
+make build
+```
+Run binary
+```bash
+./bin/rixlog
+```
 
 ## MakeFile
 
