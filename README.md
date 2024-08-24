@@ -8,9 +8,14 @@ Stack:
 * Sqlite3
 
 ## Getting Started
-
-* make build
-* ./bin/rixlog
+Create binary
+```bash
+make build
+```
+Run binary
+```bash
+./bin/rixlog
+```
 
 ## MakeFile
 
