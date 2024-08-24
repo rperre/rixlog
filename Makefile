@@ -1,7 +1,7 @@
 # Simple Makefile for a Go project
 
 appname=$(notdir $(shell pwd))
-main=cmd/main.go
+main=cmd/api/main.go
 binary=bin/$(appname)
 
 # Build the application
@@ -9,11 +9,11 @@ all: build
 
 build:
 	@echo "Building..."
-	@go build -o $(binary) cmd/api/main.go
+	@go build -o $(binary) $(main)
 
 # Run the application
 run:
-	@go run cmd/api/main.go
+	@go run $(main)
 
 # Test the application
 test:
@@ -25,7 +25,7 @@ test:
 # Clean the binary
 clean:
 	@echo "Cleaning..."
-	@rm -f $(Binary)
+	@rm -f $(binary)
 
 # Live Reload
 
