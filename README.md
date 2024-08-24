@@ -3,14 +3,14 @@
 Webpage with artciles and pages.
 
 Stack:
-.Go
-.Htmx
-.Sqlite3
+*Go
+*Htmx
+*Sqlite3
 
 ## Getting Started
 
-. make build
-. ./bin/rixlog
+*make build
+* ./bin/rixlog
 
 ## MakeFile
 
