@@ -1,11 +1,19 @@
 # Project RixLog
 
-Webpage with artciles and pages.
+Website with artciles and pages.
 
+## Stack
+
+<<<<<<< HEAD
 Stack:
 * Go
 * Htmx
 * Sqlite3
+=======
+.Go
+.Htmx
+.Sqlite3
+>>>>>>> rperre/change_readme
 
 ## Getting Started
 Create binary
