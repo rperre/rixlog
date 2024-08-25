@@ -10,7 +10,7 @@ type ControllerRoute interface {
 	Routes() chi.Router
 }
 
-type ControllerMap map[string]ControllerRoute
+type RouteMap map[string]ControllerRoute
 
 func paginate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

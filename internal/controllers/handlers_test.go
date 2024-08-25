@@ -22,7 +22,7 @@ func TestHomeControllerIndexHander(t *testing.T) {
 	fmt.Println(dir)
 
 	v := Home()
-	server := httptest.NewServer(http.HandlerFunc(v.Sample))
+	server := httptest.NewServer(http.HandlerFunc(v.Index))
 
 	defer server.Close()
 	httpResp, httpErr := http.Get(server.URL)

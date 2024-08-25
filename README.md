@@ -4,12 +4,12 @@ Website with artciles and pages.
 
 ## Stack
 
-Stack:
 * Go
 * Htmx
 * Sqlite3
 
 ## Getting Started
+
 Create binary
 ```bash
 make build

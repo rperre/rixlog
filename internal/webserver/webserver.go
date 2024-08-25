@@ -12,10 +12,9 @@ import (
 	"rixlog/internal/controllers"
 )
 
-func New(m controllers.ControllerMap) *http.Server {
-	//TODO: Get rid of Config cla, ss
+func New(routes controllers.RouteMap) *http.Server {
 	config := Config{
-		Controllers:  m,
+		Controllers:  routes,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
@@ -36,7 +35,7 @@ type Config struct {
 	Port         int
 	URL          string
 	HTTPS        bool
-	Controllers  controllers.ControllerMap
+	Controllers  controllers.RouteMap
 	IdleTimeout  time.Duration
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration

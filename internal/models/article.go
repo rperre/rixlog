@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"rixlog/internal/databases"
 )
 
@@ -36,7 +37,9 @@ func (a *ArticleDB) GetByID(id int64) (*ArticleJSON, error) {
 	if err := Sqlite.Select(&article, "SELECT * FROM article WHERE id=?", id); err != nil {
 		return nil, err
 	}
-
+	if len(article) == 0 {
+		return nil, errors.New("Article not found.")
+	}
 	return article[0].JSON(), nil
 }
 

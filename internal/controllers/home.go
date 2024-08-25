@@ -1,11 +1,9 @@
 package controllers
 
 import (
-	"encoding/json"
-	"net/http"
-	"rixlog/internal/models"
-
 	"github.com/go-chi/chi/v5"
+	"net/http"
+	"rixlog/internal/views"
 )
 
 func Home() *HomeController {
@@ -23,19 +21,10 @@ var _Home *HomeController
 
 func (f HomeController) Routes() chi.Router {
 	r := chi.NewRouter()
-	r.Get("/", f.Sample)
+	r.Get("/", f.Index)
 	return r
 }
 
-// TODO: Create a templates folder with one template for this handler
-func (v *HomeController) Sample(w http.ResponseWriter, r *http.Request) {
-	if article, err := models.User().GetByID(1); err != nil {
-		resp := make(map[string]string)
-		resp["message"] = err.Error()
-		marsh, _ := json.Marshal(resp)
-		_, _ = w.Write(marsh)
-	} else {
-		marsh, _ := json.Marshal(article)
-		_, _ = w.Write(marsh)
-	}
+func (v *HomeController) Index(w http.ResponseWriter, r *http.Request) {
+	views.Index(w, r)
 }

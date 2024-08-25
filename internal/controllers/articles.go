@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"github.com/go-chi/chi/v5"
 	"net/http"
 	"rixlog/internal/databases"
 	"rixlog/internal/models"
-
-	"github.com/go-chi/chi/v5"
+	"rixlog/internal/views"
+	"strconv"
 )
 
 func Articles() *ArticlesController {
@@ -24,11 +25,11 @@ var _Articles *ArticlesController
 
 func (a *ArticlesController) Routes() chi.Router {
 	r := chi.NewRouter()
-	r.With(paginate).Get("/", a.Sample)
-	r.Get("/{slug}", a.Sample)
-	r.With(Authenticated).Post("/", a.Sample)
-	r.With(Authenticated).Put("/{slug}", a.Sample)
-	r.With(Authenticated).With(AdminOnly).Delete("/{slug}", a.Sample)
+	r.With(paginate).Get("/", a.GetArticle)
+	r.Get("/{slug}", a.SampleJSON)
+	r.With(Authenticated).Post("/", a.SampleJSON)
+	r.With(Authenticated).Put("/{slug}", a.SampleJSON)
+	r.With(Authenticated).With(AdminOnly).Delete("/{slug}", a.SampleJSON)
 	return r
 }
 
@@ -38,7 +39,19 @@ func (a *ArticlesController) HandleDBHealth(w http.ResponseWriter, r *http.Reque
 	_, _ = w.Write(jsonResp)
 }
 
-func (a *ArticlesController) Sample(w http.ResponseWriter, r *http.Request) {
+func (a *ArticlesController) GetArticle(w http.ResponseWriter, r *http.Request) {
+	model := models.Article()
+	id, _ := strconv.ParseInt(r.URL.Query().Get("id"), 10, 64)
+	if article, err := model.GetByID(id); err != nil {
+		resp := make(map[string]string)
+		resp["message"] = err.Error()
+		marsh, _ := json.Marshal(resp)
+		_, _ = w.Write(marsh)
+	} else {
+		views.Article(w, r, article)
+	}
+}
+func (a *ArticlesController) SampleJSON(w http.ResponseWriter, r *http.Request) {
 	model := models.Article()
 	if article, err := model.GetByID(5); err != nil {
 		resp := make(map[string]string)
