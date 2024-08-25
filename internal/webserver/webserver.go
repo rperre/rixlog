@@ -2,14 +2,12 @@ package webserver
 
 import (
 	"fmt"
-	"net/http"
-	"time"
-
-	_ "github.com/joho/godotenv/autoload"
-
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	_ "github.com/joho/godotenv/autoload"
+	"net/http"
 	"rixlog/internal/controllers"
+	"time"
 )
 
 func New(routes controllers.RouteMap) *http.Server {
@@ -41,13 +39,13 @@ type Config struct {
 	WriteTimeout time.Duration
 }
 
-func (s *Config) RouterHandler() http.Handler {
+func (c *Config) RouterHandler() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-	for name, controller := range s.Controllers {
+	for name, controller := range c.Controllers {
 		r.Mount(name, controller.Routes())
 	}
 	return r
