@@ -5,7 +5,7 @@ import (
 	"rixlog/internal/databases"
 )
 
-type ArticleModel struct {
+type Article struct {
 	ID     string `db:"id" json:"id"`
 	UserID int64  `db:"user_id" json:"user_id"`
 	Title  string `db:"title" json:"title"`
@@ -13,8 +13,8 @@ type ArticleModel struct {
 	Slug   string `db:"slug" json:"slug"`
 }
 
-func (a *ArticleModel) JSON() *ArticleModel {
-	return &ArticleModel{
+func (a *Article) JSON() *Article {
+	return &Article{
 		ID:     a.ID,
 		UserID: a.UserID,
 		Title:  a.Title,
@@ -23,9 +23,9 @@ func (a *ArticleModel) JSON() *ArticleModel {
 	}
 }
 
-func (a *ArticleModel) GetByID(id int64) (*ArticleModel, error) {
+func (a *Article) GetByID(id int64) (*Article, error) {
 	Sqlite := databases.Sqlite().Connection
-	article := []ArticleModel{}
+	article := []Article{}
 	if err := Sqlite.Select(&article, "SELECT * FROM article WHERE id=?", id); err != nil {
 		return nil, err
 	}
@@ -35,6 +35,6 @@ func (a *ArticleModel) GetByID(id int64) (*ArticleModel, error) {
 	return article[0].JSON(), nil
 }
 
-func (a *ArticleModel) Create(*ArticleModel) (*ArticleModel, error) { return nil, nil }
-func (a *ArticleModel) Edit() (*ArticleModel, error)                { return nil, nil }
-func (a *ArticleModel) Delete() (*ArticleModel, error)              { return nil, nil }
+func (a *Article) Create(*Article) (*Article, error) { return nil, nil }
+func (a *Article) Edit() (*Article, error)           { return nil, nil }
+func (a *Article) Delete() (*Article, error)         { return nil, nil }
