@@ -49,7 +49,7 @@ func (a *ArticlesController) Routes() chi.Router {
 
 func (a *ArticlesController) ExistingArticle(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		model := models.Article()
+		model := &models.ArticleModel{}
 		id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		fmt.Println(chi.URLParam(r, "id"))
 		fmt.Println(id)
@@ -64,7 +64,7 @@ func (a *ArticlesController) ExistingArticle(next http.Handler) http.Handler {
 }
 
 type ArticleResponse struct {
-	*models.ArticleJSON
+	*models.ArticleModel
 
 	Elapsed int64 `json:"elapsed"`
 }
@@ -77,7 +77,7 @@ func (rd *ArticleResponse) Render(w http.ResponseWriter, r *http.Request) error 
 
 func (a *ArticlesController) GetArticle(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	article, ok := ctx.Value("article").(*models.ArticleJSON)
+	article, ok := ctx.Value("article").(*models.ArticleModel)
 	if !ok {
 		HttpError(errors.New("Something went wrong"), http.StatusUnprocessableEntity, w, r)
 		return
@@ -88,7 +88,7 @@ func (a *ArticlesController) GetArticle(w http.ResponseWriter, r *http.Request) 
 		} else if strings.Contains(accpet_header, "application/json") {
 			marsh, _ := json.Marshal(article)
 			render.Status(r, http.StatusOK)
-			_ = render.Render(w, r, &ArticleResponse{ArticleJSON: article})
+			_ = render.Render(w, r, &ArticleResponse{ArticleModel: article})
 			_, _ = w.Write(marsh)
 		}
 	}
