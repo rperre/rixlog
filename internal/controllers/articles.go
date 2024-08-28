@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -8,12 +9,6 @@ import (
 	"github.com/go-chi/render"
 	"net/http"
 	"rixlog/internal/models"
-
-	"github.com/go-chi/chi/v5"
-
-	"github.com/go-chi/chi/v5"
-
-	"github.com/go-chi/chi/v5"
 	"rixlog/internal/views"
 	"strconv"
 	"strings"
@@ -34,10 +29,21 @@ var _Articles *ArticlesController
 
 func (a *ArticlesController) Routes() chi.Router {
 	r := chi.NewRouter()
-	r.With(paginate).Get("/", a.GetArticle)
-	r.With(Authenticated).Post("/", a.Void)
-	r.With(Authenticated).Put("/", a.Void)
-	r.With(Authenticated).With(AdminOnly).Delete("/", a.Void)
+	r.
+		With(a.ExistingArticle).
+		Get("/{id}", a.GetArticle)
+	r.
+		With(Authenticated).
+		Post("/", a.Void)
+	r.
+		With(Authenticated).
+		With(a.ExistingArticle).
+		Put("/{id}", a.Void)
+	r.
+		With(Authenticated).
+		With(AdminOnly).
+		With(a.ExistingArticle).
+		Delete("/{id}", a.Void)
 	return r
 }
 
@@ -70,10 +76,11 @@ func (rd *ArticleResponse) Render(w http.ResponseWriter, r *http.Request) error 
 }
 
 func (a *ArticlesController) GetArticle(w http.ResponseWriter, r *http.Request) {
-	model := models.Article()
-	id, _ := strconv.ParseInt(r.URL.Query().Get("id"), 10, 64)
-	if article, err := model.GetByID(id); err != nil {
-		HtppRerror(err, w, r)
+	ctx := r.Context()
+	article, ok := ctx.Value("article").(*models.ArticleJSON)
+	if !ok {
+		HttpError(errors.New("Something went wrong"), http.StatusUnprocessableEntity, w, r)
+		return
 	} else {
 		accpet_header := r.Header["Accept"][0]
 		if strings.Contains(accpet_header, "text/html") {
@@ -93,5 +100,5 @@ func HttpError(err error, code int, w http.ResponseWriter, r *http.Request) {
 	resp := make(map[string]string)
 	resp["message"] = err.Error()
 	marsh, _ := json.Marshal(resp)
-	_, _ = w.Write(marsh)
+	http.Error(w, string(marsh), code)
 }
