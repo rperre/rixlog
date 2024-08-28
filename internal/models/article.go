@@ -5,24 +5,16 @@ import (
 	"rixlog/internal/databases"
 )
 
-type ArticleDB struct {
-	ID     string `db:"id"`
-	UserID int64  `db:"user_id"`
-	Title  string `db:"title"`
-	Body   string `db:"body"`
-	Slug   string `db:"slug"`
+type ArticleModel struct {
+	ID     string `db:"id" json:"id"`
+	UserID int64  `db:"user_id" json:"user_id"`
+	Title  string `db:"title" json:"title"`
+	Body   string `db:"body" json:"body"`
+	Slug   string `db:"slug" json:"slug"`
 }
 
-type ArticleJSON struct {
-	ID     string `json:"id"`
-	UserID int64  `json:"user_id"`
-	Title  string `json:"title"`
-	Body   string `json:"body"`
-	Slug   string `json:"slug"`
-}
-
-func (a *ArticleDB) JSON() *ArticleJSON {
-	return &ArticleJSON{
+func (a *ArticleModel) JSON() *ArticleModel {
+	return &ArticleModel{
 		ID:     a.ID,
 		UserID: a.UserID,
 		Title:  a.Title,
@@ -31,9 +23,9 @@ func (a *ArticleDB) JSON() *ArticleJSON {
 	}
 }
 
-func (a *ArticleDB) GetByID(id int64) (*ArticleJSON, error) {
+func (a *ArticleModel) GetByID(id int64) (*ArticleModel, error) {
 	Sqlite := databases.Sqlite().Connection
-	article := []ArticleDB{}
+	article := []ArticleModel{}
 	if err := Sqlite.Select(&article, "SELECT * FROM article WHERE id=?", id); err != nil {
 		return nil, err
 	}
@@ -43,17 +35,6 @@ func (a *ArticleDB) GetByID(id int64) (*ArticleJSON, error) {
 	return article[0].JSON(), nil
 }
 
-func (a *ArticleDB) Create(*ArticleDB) (*ArticleJSON, error) { return nil, nil }
-func (a *ArticleDB) Edit() (*ArticleJSON, error)             { return nil, nil }
-func (a *ArticleDB) Delete() (*ArticleJSON, error)           { return nil, nil }
-
-var _ArticleModel *ArticleDB
-
-func Article() *ArticleDB {
-	if _ArticleModel != nil {
-		return _ArticleModel
-	}
-
-	_ArticleModel = &ArticleDB{}
-	return _ArticleModel
-}
+func (a *ArticleModel) Create(*ArticleModel) (*ArticleModel, error) { return nil, nil }
+func (a *ArticleModel) Edit() (*ArticleModel, error)                { return nil, nil }
+func (a *ArticleModel) Delete() (*ArticleModel, error)              { return nil, nil }
