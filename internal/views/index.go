@@ -10,7 +10,7 @@ type IndexView struct {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("/home/rix/code/rixlog/internal/views/index.html"))
+	tmpl := template.Must(template.ParseFiles("internal/views/index.html"))
 	data := &IndexView{Title: "We made it"}
 	_ = tmpl.Execute(w, data)
 }

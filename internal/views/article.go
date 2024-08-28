@@ -7,6 +7,6 @@ import (
 )
 
 func Article(w http.ResponseWriter, r *http.Request, article *models.ArticleJSON) {
-	tmpl := template.Must(template.ParseFiles("/home/rix/code/rixlog/internal/views/article.html"))
+	tmpl := template.Must(template.ParseFiles("internal/views/article.html"))
 	_ = tmpl.Execute(w, article)
 }
