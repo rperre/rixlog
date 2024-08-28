@@ -13,16 +13,6 @@ type Article struct {
 	Slug   string `db:"slug" json:"slug"`
 }
 
-func (a *Article) JSON() *Article {
-	return &Article{
-		ID:     a.ID,
-		UserID: a.UserID,
-		Title:  a.Title,
-		Body:   a.Body,
-		Slug:   a.Slug,
-	}
-}
-
 func (a *Article) GetByID(id int64) (*Article, error) {
 	Sqlite := databases.Sqlite().Connection
 	article := []Article{}
@@ -32,7 +22,7 @@ func (a *Article) GetByID(id int64) (*Article, error) {
 	if len(article) == 0 {
 		return nil, errors.New("Article not found.")
 	}
-	return article[0].JSON(), nil
+	return &article[0], nil
 }
 
 func (a *Article) Create(*Article) (*Article, error) { return nil, nil }
