@@ -22,7 +22,7 @@ func Sqlite() SqliteDB {
 	if _sqliteInstace != nil {
 		return *_sqliteInstace
 	}
-	dburl := "/home/rix/code/rixlog/tmp/data_base.sqlite3"
+	dburl := "tmp/data_base.sqlite3"
 	db, err := sqlx.Connect("sqlite3", dburl)
 	if err != nil {
 		log.Fatal(err)
