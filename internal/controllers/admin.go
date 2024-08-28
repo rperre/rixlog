@@ -19,7 +19,7 @@ func (a *Admin) Routes() chi.Router {
 }
 
 func (v *Admin) Sample(w http.ResponseWriter, r *http.Request) {
-	model := models.Article()
+	model := &models.Article{}
 	if article, err := model.GetByID(5); err != nil {
 		resp := make(map[string]string)
 		resp["message"] = err.Error()

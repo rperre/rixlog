@@ -34,7 +34,7 @@ func (a *AuthController) Routes() chi.Router {
 }
 
 func (v *AuthController) Sample(w http.ResponseWriter, r *http.Request) {
-	model := models.Article()
+	model := &models.Article{}
 	if article, err := model.GetByID(5); err != nil {
 		resp := make(map[string]string)
 		resp["message"] = err.Error()
