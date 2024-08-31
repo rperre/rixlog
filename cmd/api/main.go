@@ -8,7 +8,7 @@ import (
 
 var WebServer = webserver.New(controllers.RouteMap{
 	"/":         controllers.Home(),
-	"/articles": controllers.Articles(),
+	"/articles": &controllers.ArticlesController{},
 	"/auth":     controllers.Auth(),
 })
 

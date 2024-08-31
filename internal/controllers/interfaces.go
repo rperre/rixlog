@@ -3,8 +3,55 @@ package controllers
 import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/render"
 	"net/http"
+	"strings"
+	"text/template"
 )
+
+func HttpResponse(w http.ResponseWriter, r *http.Request, response render.Renderer) {
+	accpet_header := strings.Split(r.Header["Accept"][0], ",")[0]
+	switch accpet_header {
+	case "text/html":
+		render.Status(r, http.StatusOK)
+		tmpl := template.Must(template.ParseFiles("internal/views/article.html"))
+		err := tmpl.Execute(w, response)
+		if err != nil {
+			errorData := make(map[string]string)
+			errorData["message"] = err.Error()
+			HttpErrorJSONResponse(w, r, HttpError{Data: errorData, Code: http.StatusUnprocessableEntity})
+		}
+	case "application/json":
+		render.Status(r, http.StatusOK)
+		err := render.Render(w, r, response)
+
+		if err != nil {
+			errorData := make(map[string]string)
+			errorData["message"] = err.Error()
+			HttpErrorJSONResponse(w, r, HttpError{Data: errorData, Code: http.StatusUnprocessableEntity})
+		}
+	default:
+		errorData := make(map[string]string)
+		errorData["message"] = "Content-Type not supported"
+		HttpErrorJSONResponse(w, r, HttpError{Data: errorData, Code: http.StatusBadRequest})
+	}
+}
+
+func (a *ArticlesController) Void(w http.ResponseWriter, r *http.Request) {}
+
+type HttpError struct {
+	Data map[string]string
+	Code int
+}
+
+func (rd *HttpError) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
+
+func HttpErrorJSONResponse(w http.ResponseWriter, r *http.Request, err HttpError) {
+	render.Status(r, err.Code)
+	render.JSON(w, r, err)
+}
 
 type ControllerRoute interface {
 	Routes() chi.Router
