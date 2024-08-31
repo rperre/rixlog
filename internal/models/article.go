@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"net/http"
 	"rixlog/internal/databases"
 )
 
@@ -23,6 +24,10 @@ func (a *Article) GetByID(id int64) (*Article, error) {
 		return nil, errors.New("Article not found.")
 	}
 	return &article[0], nil
+}
+
+func (rd *Article) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
 }
 
 func (a *Article) Create(*Article) (*Article, error) { return nil, nil }
